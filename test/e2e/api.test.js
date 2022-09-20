@@ -14,9 +14,19 @@ describe('API E2E Test Suite', () => {
         .get('/')
         const data = JSON.parse(response.text)
         expect(data).toBeInstanceOf(Array)
+        expect(data.length).toEqual(0)
         console.log('text', response.text)
     })
 
-    test.todo('POST / - should save an item and return ok')
+    test('POST / - should save an item and return ok', async () => {
+        const response = await superTest(Server)
+        .post('/')
+        .send({
+            nome: 'Ariel Oliveira de Mello',
+            age: 20
+        })
+        const expectedResponse = { ok: 1 }
+        expect(JSON.parse(response.text)).toStrictEqual(expectedResponse)
+    })
     test.todo('DELETE / - should delete all items and return ok')
 })
